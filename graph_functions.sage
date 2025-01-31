@@ -23,27 +23,10 @@ def build_isogeny_graph_over_Fpbar(p, l, steps=oo):
     q = next(q for q in Primes() if q%4 == 3 and kronecker_symbol(-q,p) == -1)
     K = QuadraticField(-q)
     H = K.hilbert_class_polynomial()
-    j0 = H.change_ring(GF(p^2)).any_root()
-    
-    def get_neighbors(j):
-        R.<x> = GF(p^2)[]
-        phi = Phi_polys(l,x,j)
-        return flatten([[j2]*k for j2,k in phi.roots()])
-    G = DiGraph(multiedges=True,loops=True)
-    visited = set()
-    not_visited = set([j0])
-    count = 0
-    while not_visited:
-        j1 = not_visited.pop()
-        visited.add(j1)
-        for j2 in get_neighbors(j1):
-            G.add_edge([j1,j2])
-            if j2 not in visited and j2 not in not_visited:
-                not_visited.add(j2)
-        count += 1
-        if count == steps:
-            break
-    return G
+    Fp2.<s> = GF(p^2)
+    j0 = H.change_ring(Fp2).any_root()
+
+    return EllipticCurve(Fp2,j=j0).isogeny_ell_graph(2,label_by_j=True,directed=True)
 
 # This function computes the spine of a directed l-isogeny graph.
 # INPUT: primes p, l, G: isogeny graph over Fp-bar (optional) number of steps.
@@ -62,12 +45,16 @@ def build_spine(p, l, G, steps = oo):
         A graph where vertices are j-invariants of supersingular elliptic curves
         over F_p and edges represent l-isogenies defined over Fp-bar.
     """
+    G = G.copy()
     if p == 2 or p == 3:
         return G
     else:
-        D = G
+        D = DiGraph(G.edges(),multiedges=True,loops=True)
         for j in D.vertices():
-            if j not in GF(p):
+            try: 
+                GF(p)(j)
+                continue
+            except:
                 D.delete_vertex(j)
         return D
 
