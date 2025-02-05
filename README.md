@@ -15,6 +15,6 @@ The file contents (in alphabetical order) are as follows:
 * loops & multi-edges in G_l(Fp).pdf: A pdf listing pairs of primes $p,\ell$ for which the $\mathbb{F}_p$ supersingular $\ell$-isogeny graph has loops and/or multiedges
 * Multi_Edges_in_G_ell_F_p.ipynb: Notebook used to compute data in the loops & multi-edges in G_l(Fp).pdf
 * Small_Prime_Information.ipynb: Notebook to print out precise edge and vertex information for the $\mathbb{F}_p$ $\ell$-isogeny graph, and precisely how the edges and vertices change when mapped into the spine. 
-* SmallCharacteristicGraphDescription.pdf:
+* SmallCharacteristicGraphDescription.pdf: In this pdf, we explicitly compute the mapping from the $\mathbb{F}_p$ $2$- and $3$-isogeny graphs for certain small primes which are excluded from our general structure theorems.
 * SpineDiameter_examples.ipynb: Graphs giving examples of the paper's theorems on spine diameters
 * SpineDiameters.ipynb: Notebook for generating conglomerate data on the spine diameters. 
